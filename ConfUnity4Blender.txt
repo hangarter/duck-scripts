@@ -1,0 +1,26 @@
+REM Activates import of blender file animations
+REM by Hangarter
+
+WINDOWS r
+DELAY 500
+STRING powershell Start-Process powershell -Verb runAs
+CTRL-SHIFT ENTER
+DELAY 1500
+ALT y
+DELAY 1000
+STRING cd "c:\Program Files\Unity\Hub\Editor"
+SPACE
+ENTER
+DELAY 500
+STRING $unityFolders = Resolve-Path "./*"| Select -ExpandProperty Path;foreach($unityFolder in $unityFolders){cd "c:\Program Files\Unity\Hub\Editor";$toolsFolder = Join-Path -Path $unityFolder -ChildPath " Editor\Data\tools";cd $toolsFolder;$scriptPath = "$toolsFolder\Unity-BlenderToFBX.py";$unityBlenderScript = Get-Content $scriptPath;$newContent = $unityBlenderScript.replace('bake_anim_use_nla_strips=False','bake_anim_use_nla_strips=True').replace('bake_anim_use_all_actions=False', 'bake_anim_use_all_actions=True');Set-Content -Path $scriptPath -Value $newContent}
+ENTER
+DELAY 500
+STRING exit
+ENTER
+DELAY 500
+WINDOWS r
+DELAY 1000
+STRING notepad
+ENTER
+DELAY 1000
+STRING Unity is configured to use blender files :)
